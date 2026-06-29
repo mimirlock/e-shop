@@ -1,7 +1,7 @@
 from app import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash,check_password_hash
-class Usuario(db.model):
+class Usuario(db.Model):
     __tablename__ ='usuarios'
 
     id=db.Column(db.Integer,primary_key=True)
@@ -11,7 +11,8 @@ class Usuario(db.model):
     rol=db.Column(db.Enum('cliente','admin'),default='cliente')
     activo= db.Column(db.Boolean,default=True)
     creado_en =db.Column(db.DateTime,default=datetime.now())
-
+#relacion un usuario 
+pedidos=db
 #--Metodos de contraseña 
 def set_password(self,password_plano):
     """Hash a la contraseña en texto plano"""
