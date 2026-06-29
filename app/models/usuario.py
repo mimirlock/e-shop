@@ -11,8 +11,10 @@ class Usuario(db.Model):
     rol=db.Column(db.Enum('cliente','admin'),default='cliente')
     activo= db.Column(db.Boolean,default=True)
     creado_en =db.Column(db.DateTime,default=datetime.now())
-#relacion un usuario 
-pedidos=db
+
+#relacion un usuario tiene muchos pedidos 
+pedidos= db.relationship ('pedido',backref='client', lazy=True)
+
 #--Metodos de contraseña 
 def set_password(self,password_plano):
     """Hash a la contraseña en texto plano"""
