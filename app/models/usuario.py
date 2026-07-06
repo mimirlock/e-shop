@@ -1,7 +1,9 @@
 from app import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash,check_password_hash
-class Usuario(db.Model):
+from flask_login import UserMixin
+
+class Usuario(UserMixin,db.Model):
     __tablename__ ='usuarios'
 
     id=db.Column(db.Integer,primary_key=True)
@@ -12,20 +14,20 @@ class Usuario(db.Model):
     activo= db.Column(db.Boolean,default=True)
     creado_en =db.Column(db.DateTime,default=datetime.now())
 
-#relacion un usuario tiene muchos pedidos 
-pedidos= db.relationship ('pedido',backref='client', lazy=True)
+    #relacion un usuario tiene muchos pedidos 
+    pedidos= db.relationship ('pedido',backref='client', lazy=True)
 
-#--Metodos de contraseña 
-def set_password(self,password_plano):
-    """Hash a la contraseña en texto plano"""
-    self.password= generate_password_hash(password_plano)
+    #--Metodos de contraseña 
+    def set_password(self,password_plano):
+        """Hash a la contraseña en texto plano"""
+        self.password= generate_password_hash(password_plano)
 
-def check_password(self,passwd):
-    """Compara el texto plano con la contraseña hash"""
-    return check_password_hash(passwd)
-def es_admin(self):
-    return self.rol =="admin"
+    def check_password(self,passwd):
+        """Compara el texto plano con la contraseña hash"""
+        return check_password_hash(passwd)
+    def es_admin(self):
+        return self.rol =="admin"
 
-def __repr__(self):
-    return f'<Usuario: {self.email}| {self.rol}>'
+    def __repr__(self):
+        return f'<Usuario: {self.email}| {self.rol}>'
 
