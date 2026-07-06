@@ -23,6 +23,7 @@ class Usuario(UserMixin,db.Model):
         self.password= generate_password_hash(password_plano)
 
     def check_password(self,passwd):
+        
         """Compara el texto plano con la contraseña hash"""
         return check_password_hash(passwd)
     def es_admin(self):
